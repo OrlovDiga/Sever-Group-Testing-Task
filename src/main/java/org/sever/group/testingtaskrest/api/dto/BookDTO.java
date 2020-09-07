@@ -44,11 +44,11 @@ public class BookDTO {
         this.author = author;
     }
 
-    public Long getShelvingId() {
+    public Long getRackId() {
         return rackId;
     }
 
-    public void setShelvingId(Long rackId) {
+    public void setRackId(Long rackId) {
         this.rackId = rackId;
     }
 

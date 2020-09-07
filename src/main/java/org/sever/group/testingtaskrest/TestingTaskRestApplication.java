@@ -33,39 +33,38 @@ public class TestingTaskRestApplication {
             Book book1 = new Book();
             book1.setName("book1");
             book1.setAuthor("author1");
-            book1.setShelvingId(1L);
+            book1.setRackId(1L);
             book1.setLevelNumber(LevelNumber.THIRD);
 
             Book book2 = new Book();
             book2.setName("book2");
             book2.setAuthor("author2");
-            book2.setShelvingId(1L);
+            book2.setRackId(1L);
             book2.setLevelNumber(LevelNumber.FIRST);
 
             Book book3 = new Book();
             book3.setName("book3");
             book3.setAuthor("author4");
-            book3.setShelvingId(1L);
+            book3.setRackId(1L);
             book3.setLevelNumber(LevelNumber.SECOND);
 
             Book book4 = new Book();
             book4.setName("book4");
             book4.setAuthor("author1");
-            book4.setShelvingId(2L);
+            book4.setRackId(2L);
             book4.setLevelNumber(LevelNumber.THIRD);
 
             Book book5 = new Book();
             book5.setName("book5");
             book5.setAuthor("author3");
-            book5.setShelvingId(3L);
+            book5.setRackId(3L);
             book5.setLevelNumber(LevelNumber.SECOND);
 
             Book book6 = new Book();
             book6.setName("book6");
             book6.setAuthor("author2");
-            book6.setShelvingId(2L);
+            book6.setRackId(2L);
             book6.setLevelNumber(LevelNumber.FIRST);
-
 
             bookRepo.save(book1);
             bookRepo.save(book2);

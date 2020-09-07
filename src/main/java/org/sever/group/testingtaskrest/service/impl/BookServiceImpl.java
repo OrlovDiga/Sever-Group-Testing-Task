@@ -28,13 +28,13 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<Book> findAllByShelvingIdAndLevelNumber(Long shelvingId, LevelNumber number) {
-        return repo.findAllByShelvingIdAndLevelNumber(shelvingId, number);
+    public List<Book> findAllByRackIdAndLevelNumber(Long rackId, LevelNumber number) {
+        return repo.findAllByRackIdAndLevelNumber(rackId, number);
     }
 
     @Override
-    public List<Book> findAllByShelvingId(Long shelvingId) {
-        return repo.findAllByShelvingId(shelvingId);
+    public List<Book> findAllByRackId(Long rackId) {
+        return repo.findAllByRackId(rackId);
     }
 
     @Override
@@ -74,8 +74,8 @@ public class BookServiceImpl implements BookService {
         if (!book.getLevelNumber().equals(oldBook.getLevelNumber())) {
             oldBook.setLevelNumber(book.getLevelNumber());
         }
-        if (!book.getShelvingId().equals(oldBook.getShelvingId())) {
-            oldBook.setShelvingId(book.getShelvingId());
+        if (!book.getRackId().equals(oldBook.getRackId())) {
+            oldBook.setRackId(book.getRackId());
         }
 
         return repo.save(oldBook);

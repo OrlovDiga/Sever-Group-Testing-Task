@@ -12,8 +12,8 @@ import java.util.Set;
 public interface BookService {
 
     Book findById(Long bookId);
-    List<Book> findAllByShelvingIdAndLevelNumber(Long shelvingId, LevelNumber number);
-    List<Book> findAllByShelvingId(Long shelvingId);
+    List<Book> findAllByRackIdAndLevelNumber(Long rackId, LevelNumber number);
+    List<Book> findAllByRackId(Long rackId);
     List<Book> findAllByLevelNumber(LevelNumber number);
     Book searchBookByName(String name);
     Book addBook(Book book);

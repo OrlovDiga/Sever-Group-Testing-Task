@@ -49,10 +49,10 @@ public class BookStoreController {
     }
 
     @GetMapping("/rack/{rackId}")
-    public ResponseEntity<List<BookDTO>> getBooksByShelving(@PathVariable("rackId") Long id) {
+    public ResponseEntity<List<BookDTO>> getBooksByRack(@PathVariable("rackId") Long id) {
         LOG.info(RECEIVED_GET_RACK_BOOKS_REQUEST, id);
 
-        List<Book> foundBooks = bookService.findAllByShelvingId(id);
+        List<Book> foundBooks = bookService.findAllByRackId(id);
 
         if (foundBooks == null || foundBooks.isEmpty()) {
             LOG.info(RACK_BOOKS_NOT_FOUND, id);
@@ -78,13 +78,13 @@ public class BookStoreController {
     }
 
     @GetMapping("/rack/{rackId}/level/{number}")
-    public ResponseEntity<List<BookDTO>> getBooksByShelvingAndLevel(@PathVariable("rackId") Long rackId,
+    public ResponseEntity<List<BookDTO>> getBooksByRackAndLevel(@PathVariable("rackId") Long rackId,
                                                                  @PathVariable("number") LevelNumber number) {
         LOG.info(RECEIVED_GET_ALL_BOOKS_REQUEST,
                 number.toString(), rackId);
 
         List<Book> foundedBooks =
-                bookService.findAllByShelvingIdAndLevelNumber(rackId, number);
+                bookService.findAllByRackIdAndLevelNumber(rackId, number);
 
         if (foundedBooks == null || foundedBooks.isEmpty()) {
             LOG.info(ALL_BOOKS_NOT_FOUND,
@@ -99,7 +99,7 @@ public class BookStoreController {
     }
 
     @PostMapping
-    public ResponseEntity<BookDTO> addBookByShelvingAndLevel(@RequestBody BookDTO bookDTO) {
+    public ResponseEntity<BookDTO> addBookByRackAndLevel(@RequestBody BookDTO bookDTO) {
         LOG.info(RECEIVED_POST_ADD_BOOK);
 
         Book savedBook = bookService.addBook(convertToEntity(bookDTO));

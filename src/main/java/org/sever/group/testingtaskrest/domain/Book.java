@@ -37,16 +37,16 @@ public class Book {
         return author;
     }
 
-    public void setAuthor(String author) {
-        this.author = author;
-    }
-
-    public Long getShelvingId() {
+    public Long getRackId() {
         return rackId;
     }
 
-    public void setShelvingId(Long rackId) {
+    public void setRackId(Long rackId) {
         this.rackId = rackId;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
     }
 
     public LevelNumber getLevelNumber() {

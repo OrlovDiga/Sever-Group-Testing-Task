@@ -14,8 +14,8 @@ import java.util.List;
 public interface BookRepo extends CrudRepository<Book, Long> {
 
     Book findByName(String name);
-    List<Book> findAllByShelvingIdAndLevelNumber(Long shelvingId, LevelNumber number);
-    List<Book> findAllByShelvingId(Long shelvingId);
+    List<Book> findAllByRackIdAndLevelNumber(Long rackId, LevelNumber number);
+    List<Book> findAllByRackId(Long rackId);
     List<Book> findBooksByLevelNumber(LevelNumber number);
 
 }
