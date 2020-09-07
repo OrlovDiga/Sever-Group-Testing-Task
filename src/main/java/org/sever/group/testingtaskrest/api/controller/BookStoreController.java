@@ -32,6 +32,7 @@ public class BookStoreController {
     private final BookService bookService;
     private final ModelMapper mapper;
 
+
     @Autowired
     public BookStoreController(BookService bookService, ModelMapper mapper) {
         this.bookService = bookService;
@@ -48,6 +49,7 @@ public class BookStoreController {
                                 new ResponseEntity<>(convertToDTO(book), HttpStatus.OK);
     }
 
+
     @GetMapping("/rack/{rackId}")
     public ResponseEntity<List<BookDTO>> getBooksByRack(@PathVariable("rackId") Long id) {
         LOG.info(RECEIVED_GET_RACK_BOOKS_REQUEST, id);
@@ -60,8 +62,8 @@ public class BookStoreController {
         }
         LOG.info(RACK_BOOKS_FOUND, id);
         return new ResponseEntity<>(convertTotListDTO(foundBooks), HttpStatus.OK);
-
     }
+
 
     @GetMapping("/level/{number}")
     public ResponseEntity<List<BookDTO>> getBooksByLevel(@PathVariable("number") LevelNumber number) {
@@ -77,6 +79,7 @@ public class BookStoreController {
         return ResponseEntity.ok(convertTotListDTO(books));
     }
 
+
     @GetMapping("/rack/{rackId}/level/{number}")
     public ResponseEntity<List<BookDTO>> getBooksByRackAndLevel(@PathVariable("rackId") Long rackId,
                                                                  @PathVariable("number") LevelNumber number) {
@@ -87,16 +90,13 @@ public class BookStoreController {
                 bookService.findAllByRackIdAndLevelNumber(rackId, number);
 
         if (foundedBooks == null || foundedBooks.isEmpty()) {
-            LOG.info(ALL_BOOKS_NOT_FOUND,
-                    rackId, number.toString());
+            LOG.info(ALL_BOOKS_NOT_FOUND, rackId, number.toString());
             return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
         }
-        LOG.info(ALL_BOOKS_FOUND,
-                foundedBooks.size(),
-                rackId,
-                number.toString());
+        LOG.info(ALL_BOOKS_FOUND, foundedBooks.size(), rackId, number.toString());
         return new ResponseEntity<>(convertTotListDTO(foundedBooks), HttpStatus.OK);
     }
+
 
     @PostMapping
     public ResponseEntity<BookDTO> addBookByRackAndLevel(@RequestBody BookDTO bookDTO) {
@@ -112,12 +112,14 @@ public class BookStoreController {
         return new ResponseEntity<>(convertToDTO(savedBook), HttpStatus.CREATED);
     }
 
+
     @DeleteMapping("{bookId}")
     public void removeBookById(@PathVariable("bookId") Long id) {
         LOG.info(RECEIVED_DELETE_BOOK_REQUEST, id);
 
         bookService.removeBook(id);
     }
+
 
     @PutMapping("/{bookId}/update")
     public ResponseEntity<BookDTO> updateBook(@RequestBody BookDTO bookDTO,
@@ -134,6 +136,7 @@ public class BookStoreController {
         }
     }
 
+
     @PostMapping("/search")
     public ResponseEntity<BookDTO> searchBookByName(@RequestBody BookNameDTO name) {
         LOG.info(RECEIVED_POST_SEARCH_BOOK_REQST, name);
@@ -147,6 +150,7 @@ public class BookStoreController {
         LOG.info(BOOK_FOUND, name);
         return new ResponseEntity<>(convertToDTO(foundBook), HttpStatus.OK);
     }
+
 
     private Book convertToEntity(BookDTO bookDTO) {
         return convert(bookDTO, Book.class);
