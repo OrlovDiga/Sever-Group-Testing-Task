@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static org.sever.group.testingtaskrest.util.LogMessage.*;
+
 /**
  * @author Orlov Diga
  */
@@ -38,7 +40,7 @@ public class BookStoreController {
 
     @GetMapping("/{bookId}")
     public ResponseEntity<BookDTO> getBook(@PathVariable("bookId") Long id) {
-        LOG.info("Received a GET request to get book with id {}.", id);
+        LOG.info(RECEIVED_GET_BOOK_REQUEST, id);
 
         Book book = bookService.findById(id);
 
@@ -46,102 +48,103 @@ public class BookStoreController {
                                 new ResponseEntity<>(convertToDTO(book), HttpStatus.OK);
     }
 
-    @GetMapping("/shelving/{shelvingId}")
-    public ResponseEntity<List<BookDTO>> getBooksByShelving(@PathVariable("shelvingId") Long id) {
-        LOG.info("Received a GET request to get all books on the one shelving with id {}.", id);
+    @GetMapping("/rack/{rackId}")
+    public ResponseEntity<List<BookDTO>> getBooksByShelving(@PathVariable("rackId") Long id) {
+        LOG.info(RECEIVED_GET_RACK_BOOKS_REQUEST, id);
 
         List<Book> foundBooks = bookService.findAllByShelvingId(id);
 
         if (foundBooks == null || foundBooks.isEmpty()) {
-            LOG.info("Books on shelving with id {} was not found.", id);
-            return new ResponseEntity<>(convertTotListDTO(foundBooks), HttpStatus.OK);
+            LOG.info(RACK_BOOKS_NOT_FOUND, id);
+            return new ResponseEntity<>(convertTotListDTO(foundBooks), HttpStatus.NO_CONTENT);
         }
-        LOG.info("Books on shelving with id {} was found.", id);
+        LOG.info(RACK_BOOKS_FOUND, id);
         return new ResponseEntity<>(convertTotListDTO(foundBooks), HttpStatus.OK);
 
     }
 
     @GetMapping("/level/{number}")
     public ResponseEntity<List<BookDTO>> getBooksByLevel(@PathVariable("number") LevelNumber number) {
-        LOG.info("Received a GET request to get all books on {} shelves.", number.toString());
+        LOG.info(RECEIVED_GET_SHELF_BOOKS_REQUEST, number.toString());
 
         List<Book> books = bookService.findAllByLevelNumber(number);
 
         if (books == null || books.isEmpty()) {
-            LOG.info("Books on {} shelf not found.", number);
+            LOG.info(SHELF_BOOKS_NOT_FOUND, number);
             return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
         }
-        LOG.info("Books on {} shelf found.", number);
+        LOG.info(SHELF_BOOKS_FOUND, number);
         return ResponseEntity.ok(convertTotListDTO(books));
     }
 
-    @GetMapping("/shelving/{shelvingId}/level/{number}")
-    public ResponseEntity<List<BookDTO>> getBooksByShelvingAndLevel(@PathVariable("shelvingId") Long shelvingId,
+    @GetMapping("/rack/{rackId}/level/{number}")
+    public ResponseEntity<List<BookDTO>> getBooksByShelvingAndLevel(@PathVariable("rackId") Long rackId,
                                                                  @PathVariable("number") LevelNumber number) {
-        LOG.info("Received a GET request to get all books on {} shelf to on shelving with id {}.",
-                number.toString(), shelvingId);
+        LOG.info(RECEIVED_GET_ALL_BOOKS_REQUEST,
+                number.toString(), rackId);
 
         List<Book> foundedBooks =
-                bookService.findAllByShelvingIdAndLevelNumber(shelvingId, number);
+                bookService.findAllByShelvingIdAndLevelNumber(rackId, number);
 
         if (foundedBooks == null || foundedBooks.isEmpty()) {
-            LOG.info("Books on shelving with id {} on {} shelf were not found.",
-                    shelvingId, number.toString());
+            LOG.info(ALL_BOOKS_NOT_FOUND,
+                    rackId, number.toString());
             return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
         }
-        LOG.info("Books on shelving with id {} on {} shelf were found. Found books count: {}",
+        LOG.info(ALL_BOOKS_FOUND,
                 foundedBooks.size(),
-                shelvingId,
+                rackId,
                 number.toString());
         return new ResponseEntity<>(convertTotListDTO(foundedBooks), HttpStatus.OK);
     }
 
     @PostMapping
     public ResponseEntity<BookDTO> addBookByShelvingAndLevel(@RequestBody BookDTO bookDTO) {
-        LOG.info("Received a POST request to add book.");
+        LOG.info(RECEIVED_POST_ADD_BOOK);
 
         Book savedBook = bookService.addBook(convertToEntity(bookDTO));
 
         if (savedBook == null) {
-            LOG.info("Saving book with name {} failed.", bookDTO.getName());
+            LOG.info(SAVE_BOOK_FAILED, bookDTO.getName());
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
-        LOG.info("Saving book with name {} successful.", savedBook.getName());
+        LOG.info(SAVE_BOOK_OK, savedBook.getName());
         return new ResponseEntity<>(convertToDTO(savedBook), HttpStatus.CREATED);
     }
 
     @DeleteMapping("{bookId}")
     public void removeBookById(@PathVariable("bookId") Long id) {
-        LOG.info("Received a DELETE request to remove book with id {}.", id);
+        LOG.info(RECEIVED_DELETE_BOOK_REQUEST, id);
 
         bookService.removeBook(id);
     }
 
     @PutMapping("/{bookId}/update")
-    public ResponseEntity<BookDTO> updateBook(@RequestBody BookDTO bookDTO, @PathVariable("bookId") Long bookId) {
-        LOG.info("Received a PUT request to update book with id {}.", bookId);
+    public ResponseEntity<BookDTO> updateBook(@RequestBody BookDTO bookDTO,
+                                              @PathVariable("bookId") Long bookId) {
+        LOG.info(RECEIVED_PUT_BOOK_REQUEST, bookId);
         Book updatedBook = bookService.updateBook(convertToEntity(bookDTO), bookId);
 
         if (updatedBook == null) {
-            LOG.info("Update book with id {} was failed.", bookId);
+            LOG.info(UPDATE_BOOK_FAILED, bookId);
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         } else {
-            LOG.info("Update book with id {} was successful", bookId);
+            LOG.info(UPDATE_BOOK_OK, bookId);
             return new ResponseEntity<>(convertToDTO(updatedBook), HttpStatus.OK);
         }
     }
 
     @PostMapping("/search")
     public ResponseEntity<BookDTO> searchBookByName(@RequestBody BookNameDTO name) {
-        LOG.info("Received a POST request to search book with name {}.", name);
+        LOG.info(RECEIVED_POST_SEARCH_BOOK_REQST, name);
 
         Book foundBook = bookService.searchBookByName(name.getName());
 
         if (foundBook == null) {
-            LOG.info("Book with name: {} not found.", name);
+            LOG.info(BOOK_NOT_FOUND, name);
             return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
         }
-        LOG.info("Book with name: {} found and sent.", name);
+        LOG.info(BOOK_FOUND, name);
         return new ResponseEntity<>(convertToDTO(foundBook), HttpStatus.OK);
     }
 

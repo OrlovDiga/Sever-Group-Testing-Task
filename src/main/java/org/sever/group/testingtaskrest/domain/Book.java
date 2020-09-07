@@ -18,7 +18,7 @@ public class Book {
     private Long id;
     private String name;
     private String author;
-    private Long shelvingId;
+    private Long rackId;
     private LevelNumber levelNumber;
 
     public Long getId() {
@@ -42,11 +42,11 @@ public class Book {
     }
 
     public Long getShelvingId() {
-        return shelvingId;
+        return rackId;
     }
 
-    public void setShelvingId(Long shelvingId) {
-        this.shelvingId = shelvingId;
+    public void setShelvingId(Long rackId) {
+        this.rackId = rackId;
     }
 
     public LevelNumber getLevelNumber() {
@@ -67,7 +67,7 @@ public class Book {
         if (id != null ? !id.equals(book.id) : book.id != null) return false;
         if (name != null ? !name.equals(book.name) : book.name != null) return false;
         if (author != null ? !author.equals(book.author) : book.author != null) return false;
-        if (shelvingId != null ? !shelvingId.equals(book.shelvingId) : book.shelvingId != null) return false;
+        if (rackId != null ? !rackId.equals(book.rackId) : book.rackId != null) return false;
         return levelNumber == book.levelNumber;
     }
 
@@ -76,7 +76,7 @@ public class Book {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (author != null ? author.hashCode() : 0);
-        result = 31 * result + (shelvingId != null ? shelvingId.hashCode() : 0);
+        result = 31 * result + (rackId != null ? rackId.hashCode() : 0);
         result = 31 * result + (levelNumber != null ? levelNumber.hashCode() : 0);
         return result;
     }
@@ -87,7 +87,7 @@ public class Book {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", author='" + author + '\'' +
-                ", shelvingId=" + shelvingId +
+                ", rackId=" + rackId +
                 ", levelNumber=" + levelNumber +
                 '}';
     }
