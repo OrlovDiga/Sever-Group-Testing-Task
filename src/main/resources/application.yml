@@ -1,16 +1,18 @@
 spring:
   jpa:
+    database: POSTGRESQL
     show-sql: true
     hibernate:
       ddl-auto: create-drop
       #ddl-auto: update
-    database-platform: org.hibernate.dialect.H2Dialect
 
   datasource:
-    url: jdbc:h2:mem:testdb
-    username: sa
-    password: password
-    driver-class-name: org.h2.Driver
+    platform: postgres
+    url: jdbc:postgresql://localhost:5432/DATABASE_NAME
+    username: USERNAME
+    password: PASSWORD
+    driver-class-name: org.postgresql.Driver
+
 
 logging:
   file: logs/anonapp.log

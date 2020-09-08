@@ -66,12 +66,12 @@ public class TestingTaskRestApplication {
             book6.setRackId(2L);
             book6.setLevelNumber(LevelNumber.FIRST);
 
-            bookRepo.save(book1);
+          /*  bookRepo.save(book1);
             bookRepo.save(book2);
             bookRepo.save(book3);
             bookRepo.save(book4);
             bookRepo.save(book5);
-            bookRepo.save(book6);
+            bookRepo.save(book6);*/
         };
     }
 }

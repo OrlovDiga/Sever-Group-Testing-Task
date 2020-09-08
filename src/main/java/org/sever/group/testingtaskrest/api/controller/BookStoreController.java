@@ -6,6 +6,7 @@ import org.sever.group.testingtaskrest.api.dto.BookNameDTO;
 import org.sever.group.testingtaskrest.domain.Book;
 import org.sever.group.testingtaskrest.domain.util.LevelNumber;
 import org.sever.group.testingtaskrest.service.BookService;
+import org.sever.group.testingtaskrest.service.impl.BookServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,12 +30,12 @@ public class BookStoreController {
 
     private static final Logger LOG = LoggerFactory.getLogger(BookStoreController.class);
 
-    private final BookService bookService;
-    private final ModelMapper mapper;
+    private  BookServiceImpl bookService;
+    private  ModelMapper mapper;
 
 
     @Autowired
-    public BookStoreController(BookService bookService, ModelMapper mapper) {
+    public BookStoreController(BookServiceImpl bookService, ModelMapper mapper) {
         this.bookService = bookService;
         this.mapper = mapper;
     }

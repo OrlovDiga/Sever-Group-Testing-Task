@@ -15,16 +15,12 @@ import java.util.List;
 @Service
 public class BookServiceImpl implements BookService {
 
+    @Autowired
     private BookRepo repo;
 
-    @Autowired
-    public BookServiceImpl(BookRepo repo) {
-        this.repo = repo;
-    }
-
     @Override
-    public Book findById(Long name) {
-        return repo.findById(name).orElse(null);
+    public Book findById(Long id) {
+        return repo.findById(id).orElse(null);
     }
 
     @Override
@@ -65,16 +61,18 @@ public class BookServiceImpl implements BookService {
             return null;
         }
 
-        if (!book.getAuthor().isEmpty()) {
+        if (book.getAuthor() != null && !book.getAuthor().isEmpty()) {
             oldBook.setAuthor(book.getAuthor());
         }
-        if (!book.getName().isEmpty()) {
+        if (book.getName() != null && !book.getName().isEmpty()) {
             oldBook.setName(book.getName());
         }
-        if (!book.getLevelNumber().equals(oldBook.getLevelNumber())) {
+        if (book.getLevelNumber() != null &&
+            !book.getLevelNumber().equals(oldBook.getLevelNumber())) {
+
             oldBook.setLevelNumber(book.getLevelNumber());
         }
-        if (!book.getRackId().equals(oldBook.getRackId())) {
+        if (book.getRackId() != null && !book.getRackId().equals(oldBook.getRackId())) {
             oldBook.setRackId(book.getRackId());
         }
 

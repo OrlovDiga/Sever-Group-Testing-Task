@@ -37,6 +37,10 @@ public class Book {
         return author;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public Long getRackId() {
         return rackId;
     }
@@ -79,6 +83,13 @@ public class Book {
         result = 31 * result + (rackId != null ? rackId.hashCode() : 0);
         result = 31 * result + (levelNumber != null ? levelNumber.hashCode() : 0);
         return result;
+    }
+
+    public boolean equalsWithoutId(Book book) {
+        return book.getLevelNumber().equals(levelNumber)
+                && book.getName().equals(name)
+                && book.getAuthor().equals(author)
+                && book.getRackId().equals(rackId);
     }
 
     @Override
