@@ -227,3 +227,6 @@ This request and response haven't body.
 
  ```
 </details>
+
+## License
+[MIT](https://github.com/OrlovDiga/Sever-Group-Testing-Task/blob/master/LICENSE)
